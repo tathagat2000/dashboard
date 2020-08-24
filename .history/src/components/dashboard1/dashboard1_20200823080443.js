@@ -391,7 +391,7 @@ class Dashboard1 extends Component {
                   <div  style={{float: 'right', cursor: 'pointer'}}
                         onClick={(event) => {this.updateHideColumnList(event, val.id-1, true)}}
                   > 
-                    <Badge variant="danger">x</Badge>
+                  <Badge variant="danger">x</Badge>
                   </div>
 
                   {val.name}

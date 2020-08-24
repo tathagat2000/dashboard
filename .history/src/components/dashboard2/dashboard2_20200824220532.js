@@ -267,7 +267,7 @@ class Dashboard2 extends Component {
 
     let newStrategyData;
 
-    if(strategyType === "callRatio" || strategyType === "putRatio") {
+    if(strategyType === "CallRatio" || strategyType === "PutRatio") {
       newStrategyData = [
         Date.now(),
         numerator,
@@ -804,7 +804,7 @@ class Dashboard2 extends Component {
                               strategies: JSON.stringify(this.state.columnListData)
                             },
                     headers: {
-                      'Access-Control-Allow-Origin': true,
+                      'Content-Type': null
                     }
                   }
             )

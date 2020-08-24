@@ -267,7 +267,7 @@ class Dashboard2 extends Component {
 
     let newStrategyData;
 
-    if(strategyType === "callRatio" || strategyType === "putRatio") {
+    if(strategyType === "CallRatio" || strategyType === "PutRatio") {
       newStrategyData = [
         Date.now(),
         numerator,
@@ -729,11 +729,13 @@ class Dashboard2 extends Component {
   // ----------------------------- Table --------------------------
 
   getTableData = (res) => {
+    console.log("table: ", res.data[0]);
     return(
       <Table striped bordered size="sm">
         <thead>
           <tr>
-            {res && res.data.length>0 && Object.keys(res.data[0]).map((val, index) => (
+            {res && res.data.length>0 && res.data[0].map((val, index) => (
+              console.log("tr: ",val," ",index)
               <th key={index}
                   style = {{
                     paddingTop: '5px',
@@ -744,29 +746,6 @@ class Dashboard2 extends Component {
             ))}
           </tr>
         </thead>
-        
-        <tbody id="TableData">
-        {res && res.data.length>0 && Object.keys(res.data).map((outerVal, outerInd) => {
-          return (
-            <tr key={outerInd}>
-              {Object.keys(res.data[outerVal]).map((innerVal, innerInd) => {
-                return (
-                  <th key={`${innerInd}-${outerInd}`}
-                      style = {{
-                      display: null,
-                    }}
-                    //className={(res.data.length-1)/2 !== outerInd ? `tableColumn-${innerInd+1}` : null }
-                    //id={this.checkBorderID(outerInd+1,innerInd+1, res.data.length)}
-                  >
-                    {res.data[outerVal][innerVal]}
-                  </th>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-
       </Table>
     )
   };
@@ -802,10 +781,7 @@ class Dashboard2 extends Component {
                               accessToken: reactLocalStorage.get("accessToken"),
                               API_Key: reactLocalStorage.get("API_Key"),
                               strategies: JSON.stringify(this.state.columnListData)
-                            },
-                    headers: {
-                      'Access-Control-Allow-Origin': true,
-                    }
+                            }
                   }
             )
             .then((response) => {

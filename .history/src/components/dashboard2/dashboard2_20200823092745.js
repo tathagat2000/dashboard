@@ -48,7 +48,7 @@ class Dashboard2 extends Component {
 
     columnListData:{"straddle":[],"strangle":[],"ironFly":[],"putButterfly":[],"callButterfly":[],"putSpread":[],"callSpread":[],"putRatio":[],"callRatio":[]},
 
-    tableData: "",
+    dataBlocks: [],
     responseData: "",
     flag: true,
   }
@@ -267,7 +267,7 @@ class Dashboard2 extends Component {
 
     let newStrategyData;
 
-    if(strategyType === "callRatio" || strategyType === "putRatio") {
+    if(strategyType === "CallRatio" || strategyType === "PutRatio") {
       newStrategyData = [
         Date.now(),
         numerator,
@@ -304,7 +304,7 @@ class Dashboard2 extends Component {
 
   straddleStructure = () => {
     return (
-      <div>
+      /*<Form>
         <Form.Group as={Row}>
           <Form.Label> Multiplier </Form.Label>
           <Col>
@@ -321,6 +321,25 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
+      </Form>*/
+      <div>
+        <div className="form-group row">
+          <label className="form-label">Multiplier</label>
+          <div className="col">
+            <input  type="number" pattern="[0-9]*" inputMode="numeric"
+                    className="form-control" 
+                    onChange={this.updateStraddleMultiplierValue} />
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-sm-12 offset-sm-4">
+            <Button variant="primary" 
+                    onClick={() => {this.addColumnListData("straddle", this.state.straddleMultiplier, "", "")}}
+            >
+              Add
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -726,51 +745,6 @@ class Dashboard2 extends Component {
     );
   }
 
-  // ----------------------------- Table --------------------------
-
-  getTableData = (res) => {
-    return(
-      <Table striped bordered size="sm">
-        <thead>
-          <tr>
-            {res && res.data.length>0 && Object.keys(res.data[0]).map((val, index) => (
-              <th key={index}
-                  style = {{
-                    paddingTop: '5px',
-                  }}
-              >
-                {val}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        
-        <tbody id="TableData">
-        {res && res.data.length>0 && Object.keys(res.data).map((outerVal, outerInd) => {
-          return (
-            <tr key={outerInd}>
-              {Object.keys(res.data[outerVal]).map((innerVal, innerInd) => {
-                return (
-                  <th key={`${innerInd}-${outerInd}`}
-                      style = {{
-                      display: null,
-                    }}
-                    //className={(res.data.length-1)/2 !== outerInd ? `tableColumn-${innerInd+1}` : null }
-                    //id={this.checkBorderID(outerInd+1,innerInd+1, res.data.length)}
-                  >
-                    {res.data[outerVal][innerVal]}
-                  </th>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-
-      </Table>
-    )
-  };
-
   // --------------- submitHandler and send requests after fix interval ----------------
 
   submitHandler = (event) => {
@@ -802,10 +776,7 @@ class Dashboard2 extends Component {
                               accessToken: reactLocalStorage.get("accessToken"),
                               API_Key: reactLocalStorage.get("API_Key"),
                               strategies: JSON.stringify(this.state.columnListData)
-                            },
-                    headers: {
-                      'Access-Control-Allow-Origin': true,
-                    }
+                            }
                   }
             )
             .then((response) => {
@@ -813,10 +784,10 @@ class Dashboard2 extends Component {
               this.setState({
                 responseData: response,
               })
-              let newTableData = this.getTableData(response);
+              //let nTable = this.getTableData(response);
 
               this.setState({
-                tableData: newTableData,
+                //dataBlocks: nTable,
                 flag: true,
               });
             })
@@ -931,11 +902,6 @@ class Dashboard2 extends Component {
           </form>
         </div>
 
-        <div className="container containerTable">
-          <div className="table-responsive">
-            {this.state.tableData}
-          </div>
-        </div>
         
       </div>
     )

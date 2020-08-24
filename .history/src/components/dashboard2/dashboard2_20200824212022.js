@@ -267,7 +267,7 @@ class Dashboard2 extends Component {
 
     let newStrategyData;
 
-    if(strategyType === "callRatio" || strategyType === "putRatio") {
+    if(strategyType === "CallRatio" || strategyType === "PutRatio") {
       newStrategyData = [
         Date.now(),
         numerator,
@@ -802,10 +802,7 @@ class Dashboard2 extends Component {
                               accessToken: reactLocalStorage.get("accessToken"),
                               API_Key: reactLocalStorage.get("API_Key"),
                               strategies: JSON.stringify(this.state.columnListData)
-                            },
-                    headers: {
-                      'Access-Control-Allow-Origin': true,
-                    }
+                            }
                   }
             )
             .then((response) => {

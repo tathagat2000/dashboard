@@ -267,7 +267,7 @@ class Dashboard2 extends Component {
 
     let newStrategyData;
 
-    if(strategyType === "callRatio" || strategyType === "putRatio") {
+    if(strategyType === "CallRatio" || strategyType === "PutRatio") {
       newStrategyData = [
         Date.now(),
         numerator,
