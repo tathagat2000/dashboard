@@ -53,7 +53,7 @@ class Home extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 3 }}>
             <Button variant="success" onClick={this.saveAccessToken}>
-              Save Access Token
+              Save Access Token!!
             </Button>
           </Col>
         </Form.Group>
@@ -107,13 +107,13 @@ class Home extends Component {
 
           <div  className="PrimaryButton">
             Market Watch
-            <Link to="/marketwatch_dashboard"
+            <Link to="/dashboard1"
                   className="stretched-link"
             />
           </div>
           <div  className="PrimaryButton">
             Strategies
-            <Link to="/strategies_dashboard"
+            <Link to="/dashboard2"
                   className="stretched-link"
             />
           </div>

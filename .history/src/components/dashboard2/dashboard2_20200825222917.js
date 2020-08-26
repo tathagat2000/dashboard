@@ -14,7 +14,6 @@ import {
   Button,
   Image,
   Badge,
-  Modal,
 } from "react-bootstrap";
 
 import "./Dashboard2Style.css";
@@ -24,9 +23,6 @@ import saveKey from "../images/userInfoTrans.png";
 class Dashboard2 extends Component {
 
   state = {
-
-    showModel: false,
-
     accessToken: "",
     apiKey: "",
 
@@ -51,9 +47,8 @@ class Dashboard2 extends Component {
     callRatioNumerator:"",
     callRatioDenominator:"",
 
-    /*columnListData:{"straddle":[],"strangle":[],"ironFly":[],"putButterfly":[],"callButterfly":[],"putSpread":[],"callSpread":[],"putRatio":[],"callRatio":[]},*/
-    showAddedMessage: false,
-    columnListData: {},
+    columnListData:{"straddle":[],"strangle":[],"ironFly":[],"putButterfly":[],"callButterfly":[],"putSpread":[],"callSpread":[],"putRatio":[],"callRatio":[]},
+
     tableData: "",
     tableStructure: "",
     table: "",
@@ -92,9 +87,6 @@ class Dashboard2 extends Component {
         })
         .catch((err) => {
           console.log(err);
-          this.setState({
-            showModel: true,
-          })
         });
     }
   }
@@ -143,9 +135,6 @@ class Dashboard2 extends Component {
         })
         .catch((err) => {
           console.log(err);
-          this.setState({
-            showModel: true,
-          })
         });
     }
   };
@@ -182,9 +171,6 @@ class Dashboard2 extends Component {
         })
         .catch((err) => {
           console.log(err);
-          this.setState({
-            showModel: true,
-          })
         });
     }
   };
@@ -205,7 +191,7 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 3 }}>
             <Button variant="success" onClick={this.saveAccessToken}>
-              Save Access Token
+              Save Access Token!!
             </Button>
           </Col>
         </Form.Group>
@@ -282,10 +268,9 @@ class Dashboard2 extends Component {
 
   addColumnListData = (strategyType, multiplier, numerator, denominator) => {
 
-    let newStrategyData, newStrategyName;
+    let newStrategyData;
 
-    if(strategyType === "CR" || strategyType === "PR") {
-      newStrategyName = strategyType + numerator + '/' + denominator + '-' + multiplier;
+    if(strategyType === "callRatio" || strategyType === "putRatio") {
       newStrategyData = [
         Date.now(),
         numerator,
@@ -294,11 +279,9 @@ class Dashboard2 extends Component {
       ]
     }
     else if(strategyType === 'straddle') {
-      newStrategyName = strategyType + '0';
       newStrategyData = [Date.now()]
     }
     else {
-      newStrategyName = strategyType + multiplier;
       newStrategyData = [
         Date.now(),
         multiplier,
@@ -306,39 +289,40 @@ class Dashboard2 extends Component {
     }
     
     let newColumnListData = this.state.columnListData;
-    newColumnListData[newStrategyName] = newStrategyData;
+    //console.log(strategyType);
+    //console.log(newColumnListData['straddle']);
+    //console.log(newColumnListData.straddle);
+    newColumnListData[strategyType].push(newStrategyData);
 
     this.setState({
       columnListData: newColumnListData,
-      showAddedMessage: true,
     })
 
     console.log(this.state.columnListData)
-    setTimeout(() => this.setState({ showAddedMessage: false }), 1000);
   }
 
-  // ---------------------- Straddle --------------------------
-
+  // -------------------------Straddle---------------------------
   straddleStructure = () => {
     return (
       <div>
-        <Col sm={{ span: 12, offset: 4 }}>
-          <Button variant="primary" 
-                  onClick={() => {this.addColumnListData("straddle","", "", "")}}
-          >
-            Add
-          </Button>
-        </Col>
-        <div style={{
-              display: this.state.showAddedMessage === false ? "none" : null,
-              marginLeft: "100px",
-            }}
-            className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
+        <Form.Group as={Row}>
+          <Form.Label> Multiplier </Form.Label>
+          <Col>
+            <Form.Control type="number" onChange={this.updateStraddleMultiplierValue}/>
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Col sm={{ span: 12, offset: 4 }}>
+            <Button variant="primary" 
+                    onClick={() => {this.addColumnListData("straddle","", "", "")}}
+            >
+              Add
+            </Button>
+          </Col>
+        </Form.Group>
       </div>
-    )
+    );
   }
 
   // -------------------------Strangle---------------------------
@@ -368,13 +352,7 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
+
       </div>
     );
   }
@@ -400,19 +378,12 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
-                    onClick={() => {this.addColumnListData("IF", this.state.ironFlyMultiplier, "", "")}}
+                    onClick={() => {this.addColumnListData("ironFly", this.state.ironFlyMultiplier, "", "")}}
             >
               Add
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -437,19 +408,12 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
-                    onClick={() => {this.addColumnListData("PBF", this.state.putButterflyMultiplier, "", "")}}
+                    onClick={() => {this.addColumnListData("putButterfly", this.state.putButterflyMultiplier, "", "")}}
             >
               Add
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -475,19 +439,12 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
-                    onClick={() => {this.addColumnListData("CBF", this.state.callButterflyMultiplier, "", "")}}
+                    onClick={() => {this.addColumnListData("callButterfly", this.state.callButterflyMultiplier, "", "")}}
             >
               Add
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -513,19 +470,12 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
-                    onClick={() => {this.addColumnListData("PS", this.state.putSpreadMultiplier, "", "")}}
+                    onClick={() => {this.addColumnListData("putSpread", this.state.putSpreadMultiplier, "", "")}}
             >
               Add
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -551,19 +501,12 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
-                    onClick={() => {this.addColumnListData("CS", this.state.callSpreadMultiplier, "", "")}}
+                    onClick={() => {this.addColumnListData("callSpread", this.state.callSpreadMultiplier, "", "")}}
             >
               Add
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -616,7 +559,7 @@ class Dashboard2 extends Component {
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
                     onClick={() => {
-                      this.addColumnListData("PR", 
+                      this.addColumnListData("putRatio", 
                                               this.state.putRatioMultiplier, 
                                               this.state.putRatioNumerator,
                                               this.state.putRatioDenominator) 
@@ -626,13 +569,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -685,7 +621,7 @@ class Dashboard2 extends Component {
           <Col sm={{ span: 12, offset: 4 }}>
             <Button variant="primary" 
                     onClick={() => {
-                      this.addColumnListData("CR", 
+                      this.addColumnListData("callRatio", 
                                               this.state.callRatioMultiplier, 
                                               this.state.callRatioNumerator,
                                               this.state.callRatioDenominator) 
@@ -695,13 +631,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -711,15 +640,16 @@ class Dashboard2 extends Component {
     return (
       <div style={{minWidth: "300px"}}>
         <Accordion defaultActiveKey="">
-          
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
+          <Card body>
+            
               Straddle
-            </Accordion.Toggle>
+              <Button variant="primary" 
+                      onClick={() => {this.addColumnListData("straddle","", "", "")}}
+                      style={{float: "right"}}
+              >
+                Add
+              </Button>
 
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>{this.straddleStructure()}</Card.Body>
-            </Accordion.Collapse>
           </Card>
 
           <Card>
@@ -799,51 +729,22 @@ class Dashboard2 extends Component {
     );
   }
 
-  // ----------------------------- Table --------------------------
-
-  isExist = (colName) => {
-
-    if(colName === "strike" || colName === "CE" || colName === "PE") {
-      return true;
-    }
-
-    if(colName === "straddle") {
-      colName = "straddle0"
-    }
-
-    //console.log(colName);
-    
-    let retFlag = false
-    Object.keys(this.state.columnListData).forEach((val) => {
-      //console.log(val);
-      if(val === colName) {
-        retFlag = true;
-      }
-    })
-
-    return retFlag;
-  };
+  // ----------------------------- Table Structure --------------------------
 
   getTableStructure = (res) => {
     return (
       <>
       <thead>
         <tr>
-          {res.length>0 && Object.keys(res[0]).map((val, index) => (
+          {res && res.data.length>0 && Object.keys(res.data[0]).map((val, index) => (
             <th key={index}
                 style = {{
                   paddingTop: '5px',
-                  display: (this.isExist(val) === false) ? 'none' : null,
                 }}
-                
+
             >
-              <div  style={{
-                      float: 'right', 
-                      cursor: 'pointer',
-                      display: (val==="strike" || val==="CE" || val==="PE") ? "none" : null,
-                    }}
+              <div  style={{float: 'right', cursor: 'pointer'}}
                     onClick={(event) => {this.deleteColumn(event, val)}}
-                    
               > 
                 <Badge variant="danger">x</Badge>
               </div>
@@ -861,19 +762,19 @@ class Dashboard2 extends Component {
     return (
       <>
       <tbody>
-        {res.length>0 && Object.keys(res).map((outerVal, outerInd) => {
+        {res && res.data.length>0 && Object.keys(res.data).map((outerVal, outerInd) => {
           return (
             <tr key={outerInd}>
-              {Object.keys(res[outerVal]).map((innerVal, innerInd) => {
+              {Object.keys(res.data[outerVal]).map((innerVal, innerInd) => {
                 return (
                   <th key={`${innerInd}-${outerInd}`}
                       style = {{
-                      display: (this.isExist(innerVal) === false) ? 'none' : null,
+                      display: null,
                     }}
-                    className={(res.length-1)/2 !== outerInd ? null : "CenterRow" }
+                    //className={(res.data.length-1)/2 !== outerInd ? `tableColumn-${innerInd+1}` : null }
                     //id={this.checkBorderID(outerInd+1,innerInd+1, res.data.length)}
                   >
-                    {res[outerVal][innerVal]}
+                    {res.data[outerVal][innerVal]}
                   </th>
                 );
               })}
@@ -887,20 +788,18 @@ class Dashboard2 extends Component {
 
   getTable = (res) => {
 
-    //console.log(res);
     let newTableStructure = this.getTableStructure(res);
     let newTableData = this.getTableData(res);
-    //console.log(newTableData);
 
-    /*this.setState({
+    this.setState({
       tableStructure: newTableStructure,
       tableData: newTableData,
-    })*/
-    
+    })
+
     return(
       <Table striped bordered size="sm">
-        {newTableStructure}
-        {newTableData}
+        {this.state.tableStructure}
+        {this.state.tableData}
       </Table>
     )
   };
@@ -909,49 +808,36 @@ class Dashboard2 extends Component {
 
   deleteColumn = (event, dcol) => {
     
-    //console.log(this.state.responseData)
+    console.log(this.state.responseData.data)
     //console.log(dcol);
 
-    if(dcol === 'straddle') {
-      dcol = "straddle0"
-    } 
+    let newResponseData = {}
 
-    let newColumnListData = {}
-
-    Object.keys(this.state.columnListData).forEach((val) => {
-      if(val !== dcol) {
-        newColumnListData[val] = this.state.columnListData[val]
-      }
-    })
-
-    //console.log(newColumnListData)
-
-    if(dcol === "straddle0") {
-      dcol = "straddle"
-    }
-
-    let newResponseData = []
-    Object.keys(this.state.responseData).forEach((row) => {
+    Object.keys(this.state.responseData.data).forEach(row => {
       let tempRow = {}
-      Object.keys(this.state.responseData[row]).forEach((col) => {
+      Object.keys(this.state.responseData.data[row]).forEach(col => {
         if(col !== dcol) {
-          tempRow[col] = this.state.responseData[row][col]
+          tempRow.col = this.state.responseData.data[row][col]
         }
       })
       newResponseData.push(tempRow)
     });
 
-    //console.log(newResponseData)
-
-    let newTable = this.getTable(newResponseData)
+    console.log(newResponseData)
 
     this.setState({
-      columnListData: newColumnListData,
-      table: newTable,
       responseData: newResponseData,
     })
 
-    //this.forceUpdate();
+    /*let newTable = this.getTable(this.state.responseData)
+
+    console.log(newTable)
+
+    this.setState({
+      table: newTable,
+    })
+
+    this.forceUpdate();*/
 
   };
 
@@ -976,7 +862,7 @@ class Dashboard2 extends Component {
         this.setState({
           flag: false,
         });
-        if (reactLocalStorage.get("accessToken") && reactLocalStorage.get("API_Key")) {
+        if (reactLocalStorage.get("accessToken")) {
           axios
             .get("http://localhost:5000/strategies",
                   { params: { ticker: this.state.tickerValue,
@@ -991,12 +877,10 @@ class Dashboard2 extends Component {
             )
             .then((response) => {
               console.log("url post:", response);
-              //console.log("submit: ",this.state.responseData);
-
               this.setState({
-                responseData: response.data,
+                responseData: response,
               })
-              let newTable = this.getTable(response.data);
+              let newTable = this.getTable(response);
 
               this.setState({
                 table: newTable,
@@ -1005,10 +889,9 @@ class Dashboard2 extends Component {
             })
             .catch((error) => {
               console.log(error);
-              this.setState({
-                //flag: true,
-                showModel: true,
-              })
+              /*this.setState({
+                flag: true,
+              })*/
             });
         }
       }
@@ -1017,40 +900,9 @@ class Dashboard2 extends Component {
     //console.log(this.state.dataBlocks);
   };
 
-  handleReload = () => {
-    window.location.reload();
-  }
-
   render() {
     return (
       <div>
-        <Modal
-          show={this.state.showModel}
-          onHide={() => {this.handleReload()}}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Some Error Occured !!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ul>
-              <li>Ensure all neccessary input values are selected (e.g. Ticker, Expiry etc.)</li>
-              <li>Re-enter value of API Key and latest Access Token.</li>
-                <DropdownButton title="Input Access Token and API Key">
-                  {this.tokenKeyForm()}
-              </DropdownButton>
-              <li>Ensure Stable Internet Connection</li>
-              <li> May some service is temporarily unavailable/down so try after some time</li>
-            </ul>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => {this.handleReload()}}>
-              Reload the page
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
         <nav className="navbar navbar-expand navbar-dark bg-dark sticky-top">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
@@ -1112,8 +964,11 @@ class Dashboard2 extends Component {
                   <Dropdown.Item
                     eventKey="50"
                     //disabled={this.state.tickerValue==='BANKNIFTY'}
-                    style={{ 
-                      display: this.state.tickerValue === "BANKNIFTY" ? "none": null,
+                    style={{
+                      display:
+                        this.state.tickerValue === "BANKNIFTY"
+                          ? "none"
+                          : "block",
                     }}
                   >
                     50
@@ -1136,7 +991,7 @@ class Dashboard2 extends Component {
               <Col>
                 <Button type="submit" variant="success">
                   {" "}
-                  Show{" "}
+                  Show!!{" "}
                 </Button>
               </Col>
             </Row>

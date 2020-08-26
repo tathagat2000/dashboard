@@ -14,7 +14,6 @@ import {
   OverlayTrigger,
   Tooltip,
   Image,
-  Modal,
 } from "react-bootstrap";
 
 import "./Dashboard1Style.css";

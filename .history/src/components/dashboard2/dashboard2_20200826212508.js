@@ -314,7 +314,7 @@ class Dashboard2 extends Component {
     })
 
     console.log(this.state.columnListData)
-    setTimeout(() => this.setState({ showAddedMessage: false }), 1000);
+    setTimeout(() => this.setState({ showAddedMessage: false }), 1500);
   }
 
   // ---------------------- Straddle --------------------------
@@ -870,7 +870,7 @@ class Dashboard2 extends Component {
                       style = {{
                       display: (this.isExist(innerVal) === false) ? 'none' : null,
                     }}
-                    className={(res.length-1)/2 !== outerInd ? null : "CenterRow" }
+                    className={(res.data.length-1)/2 !== outerInd ? null : "CenterRow" }
                     //id={this.checkBorderID(outerInd+1,innerInd+1, res.data.length)}
                   >
                     {res[outerVal][innerVal]}
@@ -924,7 +924,7 @@ class Dashboard2 extends Component {
       }
     })
 
-    //console.log(newColumnListData)
+    console.log(newColumnListData)
 
     if(dcol === "straddle0") {
       dcol = "straddle"

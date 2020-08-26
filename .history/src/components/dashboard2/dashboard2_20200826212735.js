@@ -314,7 +314,7 @@ class Dashboard2 extends Component {
     })
 
     console.log(this.state.columnListData)
-    setTimeout(() => this.setState({ showAddedMessage: false }), 1000);
+    setTimeout(() => this.setState({ showAddedMessage: false }), 1500);
   }
 
   // ---------------------- Straddle --------------------------
@@ -924,7 +924,7 @@ class Dashboard2 extends Component {
       }
     })
 
-    //console.log(newColumnListData)
+    console.log(newColumnListData)
 
     if(dcol === "straddle0") {
       dcol = "straddle"

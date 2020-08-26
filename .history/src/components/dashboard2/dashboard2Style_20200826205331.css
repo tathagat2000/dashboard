@@ -21,11 +21,6 @@
 
 .AddedColumnMessage {
   margin-top: 20px;
-  margin-left: 100px;
   color: green;
   font-weight: bold;
-}
-
-.CenterRow {
-  background: rgb(255, 158, 122);
 }

@@ -52,7 +52,6 @@ class Dashboard2 extends Component {
     callRatioDenominator:"",
 
     /*columnListData:{"straddle":[],"strangle":[],"ironFly":[],"putButterfly":[],"callButterfly":[],"putSpread":[],"callSpread":[],"putRatio":[],"callRatio":[]},*/
-    showAddedMessage: false,
     columnListData: {},
     tableData: "",
     tableStructure: "",
@@ -205,7 +204,7 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 3 }}>
             <Button variant="success" onClick={this.saveAccessToken}>
-              Save Access Token
+              Save Access Token!!
             </Button>
           </Col>
         </Form.Group>
@@ -306,39 +305,40 @@ class Dashboard2 extends Component {
     }
     
     let newColumnListData = this.state.columnListData;
+    //console.log(strategyType);
+    //console.log(newColumnListData['straddle']);
+    //console.log(newColumnListData.straddle);
     newColumnListData[newStrategyName] = newStrategyData;
 
     this.setState({
       columnListData: newColumnListData,
-      showAddedMessage: true,
     })
 
     console.log(this.state.columnListData)
-    setTimeout(() => this.setState({ showAddedMessage: false }), 1000);
   }
 
-  // ---------------------- Straddle --------------------------
-
+  // -------------------------Straddle---------------------------
   straddleStructure = () => {
     return (
       <div>
-        <Col sm={{ span: 12, offset: 4 }}>
-          <Button variant="primary" 
-                  onClick={() => {this.addColumnListData("straddle","", "", "")}}
-          >
-            Add
-          </Button>
-        </Col>
-        <div style={{
-              display: this.state.showAddedMessage === false ? "none" : null,
-              marginLeft: "100px",
-            }}
-            className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
+        <Form.Group as={Row}>
+          <Form.Label> Multiplier </Form.Label>
+          <Col>
+            <Form.Control type="number" onChange={this.updateStraddleMultiplierValue}/>
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Col sm={{ span: 12, offset: 4 }}>
+            <Button variant="primary" 
+                    onClick={() => {this.addColumnListData("straddle","", "", "")}}
+            >
+              Add
+            </Button>
+          </Col>
+        </Form.Group>
       </div>
-    )
+    );
   }
 
   // -------------------------Strangle---------------------------
@@ -368,13 +368,7 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
+
       </div>
     );
   }
@@ -406,13 +400,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -443,13 +430,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -481,13 +461,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -519,13 +492,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -557,13 +523,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -626,13 +585,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -695,13 +647,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -711,15 +656,16 @@ class Dashboard2 extends Component {
     return (
       <div style={{minWidth: "300px"}}>
         <Accordion defaultActiveKey="">
-          
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
+          <Card body>
+            
               Straddle
-            </Accordion.Toggle>
+              <Button variant="primary" 
+                      onClick={() => {this.addColumnListData("straddle","", "", "")}}
+                      style={{float: "right"}}
+              >
+                Add
+              </Button>
 
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>{this.straddleStructure()}</Card.Body>
-            </Accordion.Collapse>
           </Card>
 
           <Card>
@@ -870,7 +816,7 @@ class Dashboard2 extends Component {
                       style = {{
                       display: (this.isExist(innerVal) === false) ? 'none' : null,
                     }}
-                    className={(res.length-1)/2 !== outerInd ? null : "CenterRow" }
+                    //className={(res.data.length-1)/2 !== outerInd ? `tableColumn-${innerInd+1}` : null }
                     //id={this.checkBorderID(outerInd+1,innerInd+1, res.data.length)}
                   >
                     {res[outerVal][innerVal]}
@@ -924,7 +870,7 @@ class Dashboard2 extends Component {
       }
     })
 
-    //console.log(newColumnListData)
+    console.log(newColumnListData)
 
     if(dcol === "straddle0") {
       dcol = "straddle"
@@ -1031,17 +977,16 @@ class Dashboard2 extends Component {
           keyboard={false}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Some Error Occured !!</Modal.Title>
+            <Modal.Title>An Error Occured !!</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <ul>
               <li>Ensure all neccessary input values are selected (e.g. Ticker, Expiry etc.)</li>
               <li>Re-enter value of API Key and latest Access Token.</li>
-                <DropdownButton title="Input Access Token and API Key">
+                <DropdownButton title="Input Access Toekn and API Key">
                   {this.tokenKeyForm()}
               </DropdownButton>
-              <li>Ensure Stable Internet Connection</li>
-              <li> May some service is temporarily unavailable/down so try after some time</li>
+              <li></li>
             </ul>
           </Modal.Body>
           <Modal.Footer>
@@ -1136,7 +1081,7 @@ class Dashboard2 extends Component {
               <Col>
                 <Button type="submit" variant="success">
                   {" "}
-                  Show{" "}
+                  Show!!{" "}
                 </Button>
               </Col>
             </Row>

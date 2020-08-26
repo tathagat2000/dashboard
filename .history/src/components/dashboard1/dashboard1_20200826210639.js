@@ -14,7 +14,6 @@ import {
   OverlayTrigger,
   Tooltip,
   Image,
-  Modal,
 } from "react-bootstrap";
 
 import "./Dashboard1Style.css";
@@ -23,7 +22,6 @@ import logo from "../images/QCAlphaLogoTrans.png";
 
 class Dashboard1 extends Component {
   state = {
-    showModel: false,
     apiKey: "",
     accessToken: "",
     tickerValue: "Ticker",
@@ -106,9 +104,6 @@ class Dashboard1 extends Component {
         })
         .catch((err) => {
           console.log(err);
-          this.setState({
-            showModel: true,
-          })
         });
     }
   };
@@ -144,9 +139,6 @@ class Dashboard1 extends Component {
         })
         .catch((err) => {
           console.log(err);
-          this.setState({
-            showModel: true,
-          })
         });
     }
   };
@@ -468,9 +460,6 @@ class Dashboard1 extends Component {
         })
         .catch((err) => {
           console.log(err);
-          this.setState({
-            showModel: true,
-          })
         });
     }
   };
@@ -522,7 +511,7 @@ class Dashboard1 extends Component {
             .catch((error) => {
               console.log(error);
               this.setState({
-                showModel: true,
+                flag: true,
               })
             });
         }
@@ -540,40 +529,9 @@ class Dashboard1 extends Component {
   );
 }
 
-  handleReload = () => {
-    window.location.reload();
-  }
-
   render() {
     return (
       <div>
-        <Modal
-          show={this.state.showModel}
-          onHide={() => {this.handleReload()}}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Some Error Occured !!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ul>
-              <li>Ensure all neccessary input values are selected (e.g. Ticker, Expiry etc.)</li>
-              <li>Re-enter value of API Key and latest Access Token.</li>
-                <DropdownButton title="Input Access Token and API Key">
-                  {this.tokenKeyForm()}
-              </DropdownButton>
-              <li>Ensure Stable Internet Connection</li>
-              <li> May some service is temporarily unavailable/down so try after some time</li>
-            </ul>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => {this.handleReload()}}>
-              Reload the page
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
         <nav className="navbar navbar-expand navbar-dark bg-dark sticky-top">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
@@ -651,7 +609,7 @@ class Dashboard1 extends Component {
               <Col>
                 <Button type="submit" variant="success">
                   {" "}
-                  Show{" "}
+                  Show!!{" "}
                 </Button>
               </Col>
             </Row>

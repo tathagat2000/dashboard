@@ -924,7 +924,7 @@ class Dashboard2 extends Component {
       }
     })
 
-    //console.log(newColumnListData)
+    console.log(newColumnListData)
 
     if(dcol === "straddle0") {
       dcol = "straddle"

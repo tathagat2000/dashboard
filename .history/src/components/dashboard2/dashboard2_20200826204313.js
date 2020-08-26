@@ -205,7 +205,7 @@ class Dashboard2 extends Component {
         <Form.Group as={Row}>
           <Col sm={{ span: 12, offset: 3 }}>
             <Button variant="success" onClick={this.saveAccessToken}>
-              Save Access Token
+              Save Access Token!!
             </Button>
           </Col>
         </Form.Group>
@@ -310,36 +310,17 @@ class Dashboard2 extends Component {
 
     this.setState({
       columnListData: newColumnListData,
-      showAddedMessage: true,
+      //showAddedMessage: true,
     })
 
     console.log(this.state.columnListData)
-    setTimeout(() => this.setState({ showAddedMessage: false }), 1000);
+    setTimeout(() => this.setState({ showAddedMessage: true }), 3000);
+
+    /*this.setState({
+      showAddedMessage: false,
+    })*/
   }
 
-  // ---------------------- Straddle --------------------------
-
-  straddleStructure = () => {
-    return (
-      <div>
-        <Col sm={{ span: 12, offset: 4 }}>
-          <Button variant="primary" 
-                  onClick={() => {this.addColumnListData("straddle","", "", "")}}
-          >
-            Add
-          </Button>
-        </Col>
-        <div style={{
-              display: this.state.showAddedMessage === false ? "none" : null,
-              marginLeft: "100px",
-            }}
-            className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
-      </div>
-    )
-  }
 
   // -------------------------Strangle---------------------------
 
@@ -368,13 +349,7 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
+
       </div>
     );
   }
@@ -406,13 +381,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -443,13 +411,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -481,13 +442,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -519,13 +473,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -557,13 +504,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -626,13 +566,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -695,13 +628,6 @@ class Dashboard2 extends Component {
             </Button>
           </Col>
         </Form.Group>
-        <div style={{
-                display: this.state.showAddedMessage === false ? "none" : null,
-              }}
-              className="AddedColumnMessage"
-        > 
-          Added 
-        </div>
       </div>
     );
   }
@@ -711,15 +637,23 @@ class Dashboard2 extends Component {
     return (
       <div style={{minWidth: "300px"}}>
         <Accordion defaultActiveKey="">
-          
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
+          <Card body>
+            
               Straddle
-            </Accordion.Toggle>
-
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>{this.straddleStructure()}</Card.Body>
-            </Accordion.Collapse>
+              <Button variant="primary" 
+                      onClick={() => {this.addColumnListData("straddle","", "", "")}}
+                      style={{float: "right"}}
+              >
+                Add
+              </Button>
+              <div style={{
+                    display: this.state.showAddedMessage === false ? "none" : null,
+                    marginTop: "20px",
+                    marginLeft: "80px",
+                    fontWeight: "bold",
+                  }}> 
+                Added 
+              </div>
           </Card>
 
           <Card>
@@ -870,7 +804,7 @@ class Dashboard2 extends Component {
                       style = {{
                       display: (this.isExist(innerVal) === false) ? 'none' : null,
                     }}
-                    className={(res.length-1)/2 !== outerInd ? null : "CenterRow" }
+                    //className={(res.data.length-1)/2 !== outerInd ? `tableColumn-${innerInd+1}` : null }
                     //id={this.checkBorderID(outerInd+1,innerInd+1, res.data.length)}
                   >
                     {res[outerVal][innerVal]}
@@ -924,7 +858,7 @@ class Dashboard2 extends Component {
       }
     })
 
-    //console.log(newColumnListData)
+    console.log(newColumnListData)
 
     if(dcol === "straddle0") {
       dcol = "straddle"
@@ -1136,7 +1070,7 @@ class Dashboard2 extends Component {
               <Col>
                 <Button type="submit" variant="success">
                   {" "}
-                  Show{" "}
+                  Show!!{" "}
                 </Button>
               </Col>
             </Row>
