@@ -1154,5 +1154,5 @@ class Dashboard2 extends Component {
   }
 }
 
-// DELETE THIS
+// DELETE THI
 export default Dashboard2
